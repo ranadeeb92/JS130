@@ -60,13 +60,15 @@ class DNA {
     let dnaStrandLength = this.getLength();
     let distanceLength = distance.length;
 
-    if(dnaStrandLength === distanceLength) {
-      return this.computedistance(dnaStrand, distance);
-    } else if(dnaStrandLength > distanceLength){
-      return this.computedistance(dnaStrand.slice(0, distanceLength), distance)
-    } else{
-     return this.computedistance(dnaStrand, distance.slice(0, dnaStrandLength))
+    let minLength = Math.min(dnaStrandLength, distanceLength);
+
+    let difference = 0;
+    for(let index = 0; index < minLength; index++) {
+      if(dnaStrand[index] !== distance[index]) {
+        difference++;
+      }
     }
+    return difference;
   }
 
 }
