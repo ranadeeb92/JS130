@@ -36,34 +36,27 @@
 
 class Triangle {
   constructor(...sides) {
-    if(sides.some(side => side <= 0)) {
-      throw new Error("All sides's length should be graeter than 0");
-    }else if(!(this.isValid(sides))) {
+    if(!(this.isValid(sides))) {
       throw new Error("It is not a triangle");
     }else {
-      this.side1 = sides[0];
-      this.side2 = sides[1];
-      this.side3 = sides[2];
+      this.sides = sides;
     }
   }
-  // use this method to get triangle sides 
-  getSidesLength() {
-    return [this.side1, this.side2, this.side3];
-  }
-
+  
   isValid(sides) {
     let [a, b, c] = sides;
-    return ((a + b >= c) && (a + c >= b) && (b + c >= a));
+    return (((a + b >= c) && (a + c >= b) && (b + c >= a)) && 
+            (sides.every(side => side > 0)));
   }
 
   kind() {
-    let sidesLength = this.getSidesLength();
+    let sidesLength = this.sides;
     if(sidesLength.every(side => side === sidesLength[0])) {
       return "equilateral";
-    } else if(sidesLength[0] !== sidesLength[1] &&  sidesLength[1] !== sidesLength[2] && sidesLength[0] !== sidesLength[2]) {
-      return "scalene";
-    } else{
+    } else if(sidesLength[0] === sidesLength[1] || sidesLength[1] === sidesLength[2] || sidesLength[0] === sidesLength[2]) {
       return "isosceles";
+    } else{
+      return "scalene";
     }
   }
 }
