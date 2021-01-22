@@ -7,8 +7,6 @@
 // And the triangle is a shape that has three sides and all sides's length are > 0
 // and the sum of length of any two sides >= the third side's length
 
-const { isValidES3Identifier } = require("@babel/types");
-
 // Example/ test cases:
 // throw an eception if any of the triangle sides have length equal to 0 ot less
 // throw an exception if the triangle sides have length > 0 but they don't not satisfy 
