@@ -41,11 +41,11 @@
 // code
 
 class Octal {
-  constructor(inputNumber) {
-    if(this.isInValidInput(inputNumber)) {
+  constructor(str) {
+    if(this.isInValidInput(str)) {
       this.number = 0;
     } else{
-      this.number = inputNumber;
+      this.number = str;
     }
   }
 
