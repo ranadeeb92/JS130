@@ -33,26 +33,37 @@
 
 
   class Robot{
-
     static names = [];
-    genertaeRandomNumber(array, num) {
-        let indices = [];
-        let i = 1;
-        while(i <= num) {
-          indices.push(Math.floor(Math.random() * array.length));
-          i++;
-        }
-        return indices;
+
+    genertaeRandomNumber(max) {
+        // let indices = [];
+        // let i = 1;
+        // while(i <= num) {
+        //   indices.push(Math.floor(Math.random() * max));
+        //   i++;
+        // }
+        // return indices;
+        return Math.floor(Math.random() * max);
     }
   
     generateRandomName(){
+      let name = '';
       let digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
       let alphabit = Array(26).fill().map((_, i) => String.fromCharCode(65 + i));
-  
-     let [letter1Idx, letter2Idx] = this.genertaeRandomNumber(alphabit, 2);
-     let [digit1Idx, digit2Idx, digit3Idx] = this.genertaeRandomNumber(digits, 3);
+      
+      while(name.length < 2) {
+        let randomIndex = this.genertaeRandomNumber(alphabit.length);
+        name += alphabit[randomIndex];
+      }
+      while(name.length < 5) {
+        let randomIndex = this.genertaeRandomNumber(digits.length);
+        name += digits[randomIndex];
+      }
+
+    //  let [letter1Idx, letter2Idx] = this.genertaeRandomNumber(alphabit, 2);
+    //  let [digit1Idx, digit2Idx, digit3Idx] = this.genertaeRandomNumber(digits, 3);
      
-     let name = alphabit[letter1Idx] + alphabit[letter2Idx] + digits[digit1Idx] + digits[digit2Idx] + digits[digit3Idx];
+    //  let name = alphabit[letter1Idx] + alphabit[letter2Idx] + digits[digit1Idx] + digits[digit2Idx] + digits[digit3Idx];
      if(!(Robot.names.includes(name))) {
        Robot.names.push(name);
      } else{
