@@ -34,59 +34,45 @@
 
   class Robot{
     static names = [];
+    static DIGITS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    static ALPHABET = Array(26).fill().map((_, i) => String.fromCharCode(65 + i));
+    
+
+    static clearNames() {
+      Robot.names.splice(0, Robot.names.length);
+    }
 
     genertaeRandomNumber(max) {
-        // let indices = [];
-        // let i = 1;
-        // while(i <= num) {
-        //   indices.push(Math.floor(Math.random() * max));
-        //   i++;
-        // }
-        // return indices;
-        return Math.floor(Math.random() * max);
+      return Math.floor(Math.random() * max);
     }
   
-    generateRandomName(){
-      let name = '';
-      let digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-      let alphabit = Array(26).fill().map((_, i) => String.fromCharCode(65 + i));
+    generateRandomName() {
+      let name;
+      do{
+        name = '';
+        while(name.length < 2) {
+          let randomIndex = this.genertaeRandomNumber(Robot.ALPHABET.length);
+          name += Robot.ALPHABET[randomIndex];
+        }
+        while(name.length < 5) {
+          let randomIndex = this.genertaeRandomNumber(Robot.DIGITS.length);
+          name += Robot.DIGITS[randomIndex];
+        }
+      } while(Robot.names.includes(name))
       
-      while(name.length < 2) {
-        let randomIndex = this.genertaeRandomNumber(alphabit.length);
-        name += alphabit[randomIndex];
-      }
-      while(name.length < 5) {
-        let randomIndex = this.genertaeRandomNumber(digits.length);
-        name += digits[randomIndex];
-      }
-
-    //  let [letter1Idx, letter2Idx] = this.genertaeRandomNumber(alphabit, 2);
-    //  let [digit1Idx, digit2Idx, digit3Idx] = this.genertaeRandomNumber(digits, 3);
-     
-    //  let name = alphabit[letter1Idx] + alphabit[letter2Idx] + digits[digit1Idx] + digits[digit2Idx] + digits[digit3Idx];
-     if(!(Robot.names.includes(name))) {
-       Robot.names.push(name);
-     } else{
-        name = this.generateRandomName();
-     }
-     return name;
+      Robot.names.push(name);
+      return name;
     }
   
     name () {
       if(!(this.robotName)) {
-        let randomName = this.generateRandomName();
-        this.robotName = randomName;
+        this.robotName = this.generateRandomName();
       }
       return this.robotName;
     }
   
     reset() {
-      //Robot.names.splice(Robot.names.indexOf(this.robotName), 1);
       this.robotName = undefined;
-    }
-
-    static clearNames() {
-      Robot.names.splice(0, this.names.length);
     }
     
   }
