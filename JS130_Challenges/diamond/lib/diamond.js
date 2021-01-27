@@ -29,18 +29,17 @@
 // makeDiamond is a static method in Diamond class
 // -> determine how many rows we need by:
 //    -> compute the number of letters starting from 'A' until the input letter
-//    -> numberOfRows = numberOfLettersFrom'A' + (numberOfLettersFrom'A' - 1)
-//    -> each row length is equal to numberOfRows
-//    -> if(numberOfRows > 1)
-//        -> print first half 
-//           -> loop over the letters to print each row
-//              -> create a row with a length equal to numberOfRows
-//                 and start and end with the current letter unless it is 'A'
-//       -> print second half 
-//           -> loop over the letters ecept the input letter to print each row
-//              -> create a row with a length equal to numberOfRows
-//                 and start and end with the current letter unless it is 'A'
-//    -> else print a row that has 'A' letter
+//    -> numberOfRows = (numberOfLettersFrom'A'*2) - 1
+//    -> create a matrix (nxn) where n equals to numberOfRows
+//    -> fill the matrix withe the letters
+//      -> compute the middle of the matrix
+//      -> define row = 0
+//      -> loop over the array of letters
+//        -> start a loop over the col of the matrix from col = middle - row
+//           -> check if row + col === middle || col - row === middle => fill the position for :
+//           -> matrix[row][col] and matrix[n-row -1][col]
+//        -> row ++
+//    -> return a string represents the matrix
 
 // Code
 
