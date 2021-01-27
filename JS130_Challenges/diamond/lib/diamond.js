@@ -5,7 +5,6 @@
 //  -> it prints a diamond starting with letter 'A' with the supplied letter
 //     at the widest point
 
-const { nodeInternals } = require("stack-utils");
 
 // Examples / test cases
 // The first row and the last row contains one 'A'
@@ -46,22 +45,22 @@ const { nodeInternals } = require("stack-utils");
 // Code
 
 class Diamond {
-  static ALPHABIT = ["A", "B", "C", "D", "E", "F", "G", "H", "I",
+  static ALPHABET = ["A", "B", "C", "D", "E", "F", "G", "H", "I",
                     "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S",
                       "T", "U", "V", "W", "X", "Y", "Z"];
 
   static getDiamondLetters(letter) {
-    return this.ALPHABIT.slice(0, this.ALPHABIT.indexOf(letter) + 1);
+    return this.ALPHABET.slice(0, this.ALPHABET.indexOf(letter) + 1);
   }
 
 
   static makeDiamond(letter) {
     let diamondLetters = this.getDiamondLetters(letter);
-    let numberOfRows = diamondLetters.length + (diamondLetters.length - 1);
+    let numberOfRows = (diamondLetters.length * 2) - 1;
     // create nxn matrix
     let matrix = new Matrix(numberOfRows);
     matrix.fill(diamondLetters);
-    matrix.print();
+    return matrix.toString();
   }
 }
 
@@ -70,54 +69,29 @@ class Matrix {
     this.numberOfRows = n;
     this.numberOfCols = n;
     this.matrix = Array(this.numberOfRows).fill()
-    .map(_ => Array(this.numberOfCols).fill(' '));
+    .map(() => Array(this.numberOfCols).fill(' '));
   }
 
   fill(letters) {
-    let fillTop = this.createTopHalfFiller();
-    let fillBottom = this.createBottomHalfFiller();
-
-    for(let index = 0; index < letters.length; index++) {
-      fillTop.call(this, letters[index]);
-    }
-    for(let index = letters.length - 2; index >= 0; index--) {
-      fillBottom.call(this, letters[index]);
-    }
-
-  }
-
-  createTopHalfFiller() {
     let middle = Math.floor(this.numberOfRows/2);
     let row = 0;
-    return function(letter) {
+  
+    for(let index = 0; index < letters.length; index++) {
       for (let col = middle - row; col <= middle + row; col++) {
         if(row + col === middle || col - row === middle) {
-          this.matrix[row][col] = letter;
+          this.matrix[row][col] = letters[index];
+          this.matrix[this.numberOfRows-1 -row][col] = letters[index];
         }
      }
      row++;
     }
+
   }
 
-  createBottomHalfFiller() {
-    let middle = Math.floor(this.numberOfRows/2);
-    let row = middle + 1;
-    return function(letter) {
-      let temp = row - middle;
-      for (let col = temp; col < this.numberOfRows - temp; col++) {
-        //if(row - (row - middle) === middle ){
-          this.matrix[row][col] = letter;
-        //}
-        
-     }
-     row++;
-    }
-  }
-
-  print() {
-    this.matrix.forEach(row => console.log(row.join('')));
+  toString() {
+    return this.matrix.map(row => row.join('')).join('\n') + "\n";
   }
     
 
 }
-console.log(Diamond.makeDiamond('F'))
+module.exports = Diamond;
